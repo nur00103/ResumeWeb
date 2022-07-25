@@ -1,6 +1,7 @@
 <%@ page import="dao.UserDao" %>
 <%@ page import="daoImpl.UserDaoImpl" %>
 <%@ page import="modul.User" %>
+<%@ page import="com.resumeweb.resumeweb.UserRequestUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,11 +13,8 @@
 </head>
 <body>
   <%
-    UserDao userDao=new UserDaoImpl();
-    User user=userDao.getById(1);
-
+      User user=(User) request.getAttribute("user");
   %>
-
 <div class="context-menu">
   <form action="UserController" method="POST">
       <input type="hidden" name="id" value="<%=user.getId()%>"/>
@@ -34,5 +32,6 @@
   </form>
 
 </div>
+
 </body>
 </html>

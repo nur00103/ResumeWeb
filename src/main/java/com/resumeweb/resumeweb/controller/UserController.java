@@ -1,4 +1,4 @@
-package com.resumeweb.resumeweb;
+package com.resumeweb.resumeweb.controller;
 
 import dao.UserDao;
 import daoImpl.UserDaoImpl;
@@ -29,11 +29,12 @@ public class UserController extends HttpServlet {
             if (user == null) {
                 throw new IllegalArgumentException("There is no user with this id");
             }
+            request.setAttribute("owner", true);
             request.setAttribute("user",user);
             request.getRequestDispatcher("userdetail.jsp").forward(request,response);
         }catch (Exception e){
             e.printStackTrace();
-            response.sendRedirect("error.jsp?msg="+e.getMessage());
+            response.sendRedirect("error?msg="+e.getMessage());
         }
     }
 

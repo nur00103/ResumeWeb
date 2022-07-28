@@ -11,9 +11,7 @@
     <title>Why are you here?</title>
 </head>
 <body>
-  <%
-    String msg=request.getParameter("msg");
-  %>
-  <%=msg%>
+
+  <%=request.getParameter("msg")%>
 </body>
 </html>

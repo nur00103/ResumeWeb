@@ -16,7 +16,7 @@
       User user=(User) request.getAttribute("user");
   %>
 <div class="context-menu">
-  <form action="UserController" method="POST">
+  <form action="userdetail" method="POST">
       <input type="hidden" name="id" value="<%=user.getId()%>"/>
 
       <label>Name:</label>

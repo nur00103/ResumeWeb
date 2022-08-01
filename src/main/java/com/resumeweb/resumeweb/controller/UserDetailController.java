@@ -9,8 +9,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "UserController", value = "/userdetail")
-public class UserController extends HttpServlet {
+@WebServlet(name = "UserDetailController", urlPatterns = {"/userdetail"})
+public class UserDetailController extends HttpServlet {
 
     UserDao userDao=new UserDaoImpl();
 
@@ -29,7 +29,7 @@ public class UserController extends HttpServlet {
             if (user == null) {
                 throw new IllegalArgumentException("There is no user with this id");
             }
-            request.setAttribute("owner", true);
+            //request.setAttribute("owner", true);
             request.setAttribute("user",user);
             request.getRequestDispatcher("userdetail.jsp").forward(request,response);
         }catch (Exception e){
@@ -42,16 +42,20 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int id=Integer.valueOf(request.getParameter("id"));
-        String name=request.getParameter("name");
-        String surname=request.getParameter("surname");
+        String action=request.getParameter("action");
+        if (action.equals("update")) {
+            String name = request.getParameter("name");
+            String surname = request.getParameter("surname");
 
-        User user=userDao.getById(id);
-        user.setName(name);
-        user.setSurname(surname);
-        userDao.updateUser(user);
+            User user = userDao.getById(id);
+            user.setName(name);
+            user.setSurname(surname);
+            userDao.updateUser(user);
+        } else if (action.equals("delete")) {
+            userDao.removeUser(id);
+        }
 
-
-        response.sendRedirect("userdetail.jsp");
+        response.sendRedirect("users");
 
     }
 }

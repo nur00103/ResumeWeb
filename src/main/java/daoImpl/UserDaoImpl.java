@@ -9,6 +9,7 @@ import dao.AbstractDao;
 import dao.UserDao;
 import modul.Country;
 import modul.User;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,6 +39,27 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
         return(new User(id, name, surname, email, phone, address, profileDesc, birthDate, nationality, birthPlace));
     }
+
+    private User getUserSimple(ResultSet rs) throws Exception {
+        int id = rs.getInt("ID");
+        String name = rs.getString("NAME");
+        String surname = rs.getString("SURNAME");
+        String email = rs.getString("EMAIL");
+        String phone=rs.getString("PHONE");
+        String address=rs.getString("ADDRESS");
+        String profileDesc=rs.getString("PROFILE_DESCRIPTION");
+        int nationalityId = rs.getInt("NATIONALITY_ID");
+        int birthPlaceId = rs.getInt("BIRTHPLACE_ID");
+
+        Date birthdate = rs.getDate("BIRTH_DATE");
+
+
+        User user= new User(id, name, surname,email,phone,profileDesc, birthdate, null, null);
+        user.setPassword(rs.getString("PASSWORD"));
+
+        return user;
+    }
+
 
     @Override
     public List<User> getAll(String name,String surname,Integer nationalityId) {
@@ -119,6 +141,25 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
+    public User findByEmailAndPassword(String email, String password) {
+        User result = null;
+        try(Connection c = connect()) {
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM USERR WHERE EMAIL=? and PASSWORD=?");
+            stmt.setString(1,email);
+            stmt.setString(2,password);
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                result = getUserSimple(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    @Override
     public boolean updateUser(User u) {
         try (Connection c = connect()) {
             PreparedStatement p = c.prepareStatement("UPDATE USERR SET NAME=?,SURNAME=?,EMAIL=?,PHONE=?,ADDRESS=?,PROFILE_DESCRIPTION=? WHERE ID=?");
@@ -139,8 +180,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public boolean removeUser(int id) {
         try (Connection c = connect()) {
-            Statement stmt = c.createStatement();
-            return stmt.execute("DELETE FROM USERR WHERE ID=1");
+            PreparedStatement p=c.prepareStatement("DELETE FROM USERR WHERE ID=?");
+            p.setInt(1,id);
+            return p.execute();
         } catch (Exception e) {
             e.printStackTrace();
             return false;

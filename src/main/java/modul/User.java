@@ -15,6 +15,8 @@ import java.util.List;
 public class User {
     
     private int id;
+
+    private String password;
     private String name;
     private String surname;
     private String email;
@@ -59,6 +61,20 @@ public class User {
        // this.skills = skills;
     }
 
+    public User(int id, String name, String surname, String email, String phone, String profileDesc, Date birthdate, Object o, Object o1) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.profileDesc = profileDesc;
+        this.birthDate = birthDate;
+        this.nationality = nationality;
+        this.birthPlace = birthPlace;
+        this.password=password;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -88,6 +104,14 @@ public class User {
     
     public int getId() {
         return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setId(int id) {

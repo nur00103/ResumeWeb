@@ -14,10 +14,12 @@
     <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
     <title>JSP Page</title>
     <style><%@include file="/WEB-INF/css/users.css"%></style>
-    <script><%@include file="WEB-INF/js/users.js"%></script>
+
     <link rel="stylesheet" type="text/css" href="WEB-INF/css/users.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script><%@include file="WEB-INF/js/users.js"%></script>
     <script type="text/javascript" src="/WEB-INF/js/users.js"></script>
     <!--Bootstrap import -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
